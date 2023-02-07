@@ -12,6 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "docker:start:db": "docker-compose -f docker-compose.db.yml up",
     "docker:start:dev": "npm run docker:build:dev & npm run docker:run",
     "docker:build:dev": "docker build . -t dx-components-service",
     "docker:run": "docker run --name dx-components-service -p 4000:4000 dx-components-service",
@@ -21,7 +22,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm:cli": "ts-node --transpile-only ./node_modules/typeorm/cli.js -f src/utils/typeorm-config.ts",
+    "migration:generate": "npm run typeorm:cli -- migration:generate -n",
+    "migration:generate:local": "IS_LOCAL_MACHINE=true npm run typeorm:cli -- migration:generate -n"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -30,9 +34,16 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.4",
     "@nestjs/typeorm": "^9.0.1",
+    "bunyan": "^1.8.15",
+    "bunyan-format": "^0.2.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "cli-table": "^0.3.11",
+    "express-http-context": "^1.2.4",
     "helmet": "^6.0.1",
+    "mysql2": "^2.3.3",
+    "nestjs-typeorm-paginate": "^4.0.3",
+    "on-headers": "^1.0.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.11"

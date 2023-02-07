@@ -1,0 +1,4 @@
+FROM mysql:8-debian
+
+# the container is listening on port 3306
+EXPOSE 3306

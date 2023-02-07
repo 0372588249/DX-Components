@@ -6,16 +6,36 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "strict": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "lib": [
+      "es2018",
+      "es2020",
+      "esnext.asynciterable",
+      "DOM"
+    ],
+    "types": [
+      "jest",
+      "node"
+    ]
+  },
+    "include": [
+    "src/**/*",
+    "test/**/*",
+    "typings/**/*",
+    "configs/config.*.json",
+    "configs/config.json",
+    "public/**/*",
+    "views/**/*"
+  ]
 }

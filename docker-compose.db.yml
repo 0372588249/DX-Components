@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: mysql
+    image: dx-components/mysql
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: February@2023
+      MYSQL_PASSWORD: February@2023
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    ports:
+      - '3306:3306'

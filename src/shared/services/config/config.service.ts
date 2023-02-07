@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 import { Injectable } from '@nestjs/common';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as fs from 'fs';
 import * as path from 'path';
+
 @Injectable()
 export class ConfigService {
   private readonly envConfig: { [key: string]: string };
@@ -71,5 +73,60 @@ export class ConfigService {
   }
   get timeoutResponse(): number {
     return this.int(this.envConfig['timeoutResponse'], 90000);
+  }
+  get mySqlPort(): number {
+    return this.int(this.envConfig['mySqlPort'], 3306);
+  }
+  get mySqlPassword(): string {
+    return this.envConfig['mySqlPassword'] || 'mysql';
+  }
+  get mySqlUsername(): string {
+    return this.envConfig['mySqlUsername'] || 'mysql';
+  }
+  get mySqlHost(): string {
+    // Note: when you work on local development, shoube be export IS_LOCAL_MACHINE=true before run
+    if (process.env.IS_LOCAL_MACHINE === 'true') {
+      // start on separate process
+      return 'localhost';
+    }
+
+    return this.envConfig['mySqlHost'] || 'mysql';
+  }
+  get isIntegrationTest(): boolean {
+    return this.bool(this.envConfig['isIntegrationTest'], false);
+  }
+  get postgresConfig(): TypeOrmModuleOptions {
+    const entities = [
+      __dirname + '/../../../modules/**/*.entity{.ts,.js}',
+      __dirname + '/../../../modules/**/*.view-entity{.ts,.js}',
+    ];
+    // CI test connection
+    // Not: In the CI is not run migration. BC typeOrm auto create table by entities
+    if (this.isIntegrationTest) {
+      const config: TypeOrmModuleOptions = {
+        type: 'mysql',
+        host: this.mySqlHost,
+        port: this.mySqlPort,
+        username: this.mySqlUsername,
+        password: this.mySqlPassword,
+        database: 'Dx-components',
+        entities,
+        synchronize: true,
+      };
+      return config;
+    }
+
+    // Primary connection
+    const config: TypeOrmModuleOptions = {
+      type: 'mysql',
+      host: this.mySqlHost,
+      port: this.mySqlPort,
+      username: this.mySqlUsername,
+      password: this.mySqlPassword,
+      database: 'Dx-components',
+      entities,
+      synchronize: false,
+    };
+    return config;
   }
 }
