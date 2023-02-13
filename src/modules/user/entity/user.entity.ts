@@ -1,8 +1,9 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import {
   AbstractEntity,
   SCHEMA_NAME,
 } from '../../../database/entity/abstract.entity';
+import { RoleUserEntity } from './role-user.entity';
 
 export const USER_TABLE = 'user';
 
@@ -43,4 +44,8 @@ export class UserEntity extends AbstractEntity {
 
   @Column({ nullable: true })
   last_login?: number;
+
+  @OneToOne(() => RoleUserEntity, (role_user) => role_user.user)
+  @JoinColumn({ name: 'user_id' })
+  role_user: RoleUserEntity;
 }

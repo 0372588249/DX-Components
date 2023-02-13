@@ -18,7 +18,7 @@ export abstract class AbstractEntity
   extends BaseEntity
   implements IAbstractEntity
 {
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
+  @PrimaryGeneratedColumn('increment', { type: 'bigint', unsigned: true })
   id: bigint;
 
   @Column({
