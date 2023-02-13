@@ -15,36 +15,30 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AppRequest } from 'utils/app-request';
-import { UserCreateDto } from './dtos/user-create.dto';
-import { CreateUserService } from './services/create-user.service';
-import { GetAllUserService } from './services/get-all-user.service';
-import { GetUserByIdService } from './services/get-user-by-id.service';
+import { UserCreateDto } from './dto/user-create.dto';
+import { UserService } from './services/user.service';
 
 @Controller('user')
 export class UserController {
-  constructor(
-    private readonly getUserByIdService: GetUserByIdService,
-    private readonly createUserService: CreateUserService,
-    private readonly getAllUserService: GetAllUserService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
   async createUser(@Req() request: AppRequest, @Body() body: UserCreateDto) {
-    return this.createUserService.execute(request, body);
+    return this.userService.createUser(request, body);
   }
 
-  @Get('/:userId')
+  @Get('/:id')
   @HttpCode(HttpStatus.OK)
   async getUserbyId(
     @Req() request: AppRequest,
-    @Param('assetId', ParseIntPipe) assetId: number,
+    @Param('id', ParseIntPipe) id: bigint,
   ) {
-    return this.getUserByIdService.execute(request, assetId);
+    return this.userService.getUserById(request, id);
   }
 
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getAllUser(@Req() request: AppRequest) {
-    return this.getAllUserService.execute(request);
+    return this.userService.getAllUser(request);
   }
 }

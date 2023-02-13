@@ -1,35 +1,32 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import {
   AbstractEntity,
   SCHEMA_NAME,
-} from '../../../database/entities/abstract.entity';
+} from '../../../database/entity/abstract.entity';
 
 export const USER_TABLE = 'user';
 
 @Entity(USER_TABLE, { schema: SCHEMA_NAME })
 export class UserEntity extends AbstractEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ type: 'text' })
+  @Column('varchar', { nullable: false, length: 191, name: 'email' })
   email: string;
 
   @Column({ nullable: true })
   email_verified_at?: number;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column('varchar', { nullable: true, length: 191, name: 'password' })
   password?: string;
 
   @Column({ nullable: true, type: 'text' })
   refresh_token?: string;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column('varchar', { nullable: true, length: 191, name: 'first_name' })
   first_name?: string;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column('varchar', { nullable: true, length: 191, name: 'last_name' })
   last_name?: string;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column('varchar', { nullable: true, length: 60, name: 'user_name' })
   user_name?: string;
 
   @Column({ nullable: true, type: 'int' })
