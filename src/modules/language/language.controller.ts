@@ -16,7 +16,7 @@ import {
 } from '@nestjs/common';
 import { AppRequest } from 'utils/app-request';
 
-@Controller('role-user')
+@Controller('language')
 export class LanguageController {
   @Get('/')
   @HttpCode(HttpStatus.OK)

@@ -31,5 +31,6 @@ export class RoleEntity extends AbstractEntity {
   updated_by: number;
 
   @OneToMany(() => RoleUserEntity, (role_user) => role_user.role)
+  @JoinColumn({ name: 'role_id' })
   role_users: RoleUserEntity;
 }

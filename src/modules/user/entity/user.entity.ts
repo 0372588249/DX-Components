@@ -46,6 +46,5 @@ export class UserEntity extends AbstractEntity {
   last_login?: number;
 
   @OneToOne(() => RoleUserEntity, (role_user) => role_user.user)
-  @JoinColumn({ name: 'user_id' })
   role_user: RoleUserEntity;
 }

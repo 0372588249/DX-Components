@@ -17,13 +17,13 @@ import {
 import { AppRequest } from 'utils/app-request';
 import { MediaService } from './services/media.service';
 
-@Controller('setting')
+@Controller('media')
 export class MediaController {
-  constructor(private readonly settingService: MediaService) {}
+  constructor(private readonly mediaService: MediaService) {}
 
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getAllMedia(@Req() request: AppRequest) {
-    return this.settingService.getAllMedia(request);
+    return this.mediaService.getAllMedia(request);
   }
 }
